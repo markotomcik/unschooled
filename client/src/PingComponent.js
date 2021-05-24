@@ -23,7 +23,7 @@ class PingComponent extends Component {
   }
 
   render() {
-    return <h1>Ping {this.state.pong}</h1>;
+    return <h1 className="text-6xl">Ping {this.state.pong}</h1>;
   }
 }
 
