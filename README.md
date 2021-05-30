@@ -15,7 +15,7 @@ $ npm start
 # Add and commit all of our changes, then push.
 $ git add . 
 $ git commit -m '...'
-$ git push heroku master
+$ git push
 
 # In a new terminal tail the container logs
 $ heroku logs --tail
