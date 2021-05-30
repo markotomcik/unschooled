@@ -6,7 +6,7 @@
 # From the /server directory
 $ DATABASE_URL=postgres://postgres:mysecretpassword@localhost:5432/gotutorial?sslmode=disable go run main.go
 # From the /client directory
-$ npm start`
+$ npm start
 ```
 
 ## Deploying to Heroku
