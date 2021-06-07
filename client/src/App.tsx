@@ -55,7 +55,7 @@ const App: FC = () => {
   return (
     <>
       <div className="min-h-screen w-100">
-        <div className="bg-yellow-100 py-16">
+        <div className="min-h-screen bg-yellow-100 py-16">
           <div className="flex flex-col max-w-xl m-auto justify-center p-4 shadow-xl rounded-xl bg-yellow-200">
             <div>
               <div className="flex">
