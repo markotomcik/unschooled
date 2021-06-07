@@ -30,6 +30,13 @@ const App: FC = () => {
     setTodos(newTodos)
   }
 
+  const editTodo = (id: string) => {
+    const newTodos = [...todos]
+    const todo: any = newTodos.find(todo => todo.id === id)
+    todo.name = todoNameRef?.current?.value
+    setTodos(newTodos)
+  }
+
   const handleAddTask = (event: MouseEvent) => {
     if (todoNameRef.current !== null) {
       const name = todoNameRef.current.value
@@ -65,7 +72,7 @@ const App: FC = () => {
               </div>
               <div className="m-1 rounded-lg font-medium text-yellow-900">{todos.filter(todo => !todo.complete).length} left to do</div>
             </div>
-            <TodoList todos={todos} toggleTodo={toggleTodo} clearTodo={clearTodo} />
+            <TodoList todos={todos} toggleTodo={toggleTodo} clearTodo={clearTodo} editTodo={editTodo} />
           </div>
         </div>
       </div>

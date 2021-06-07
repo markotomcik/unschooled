@@ -1,10 +1,14 @@
-export default function Todo({ todo, toggleTodo, clearTodo }: any) {
+export default function Todo({ todo, toggleTodo, clearTodo, editTodo }: any) {
   const handleTodoClick = () => {
     toggleTodo(todo.id)
   }
 
   const handleClearTodo = () => {
     clearTodo(todo.id)
+  }
+
+  const handleEditTodo = () => {
+    editTodo(todo.id)
   }
 
   return (
@@ -22,7 +26,7 @@ export default function Todo({ todo, toggleTodo, clearTodo }: any) {
         </div>
         <span className="ml-2 font-medium text-justify">{todo.name}</span>
       </label>
-      <button className="rounded-lg px-3 py-1 ml-2 bg-yellow-400 font-medium text-yellow-900 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50 active:bg-yellow-500" onClick={handleClearTodo}>Edit task</button>
+      {/* <button className="rounded-lg px-3 py-1 ml-2 bg-yellow-400 font-medium text-yellow-900 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50 active:bg-yellow-500" onClick={handleEditTodo}>Edit task</button> */}
       <button className="rounded-lg px-3 py-1 m-2 bg-yellow-400 font-medium text-yellow-900 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50 active:bg-yellow-500" onClick={handleClearTodo}>Remove task</button>
     </div>
   )
