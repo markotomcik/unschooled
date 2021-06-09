@@ -1,56 +1,56 @@
 import { FC, MouseEvent, useState, useRef, useEffect } from 'react'
 import TodoList from './TodoList'
 import { v4 as uuid } from 'uuid'
-import { ITodo } from './Interfaces'
+import { ITask } from './Interfaces'
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
 
 const App: FC = () => {
-  const [todos, setTodos] = useState<ITodo[]>([])
+  const [todos, setTasks] = useState<ITask[]>([])
   const todoNameRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
-    if (storedTodos) setTodos(storedTodos)
+    const storedTasks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
+    if (storedTasks) setTasks(storedTasks)
   }, [])
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
   }, [todos])
 
-  const toggleTodo = (id: string) => {
-    const newTodos = [...todos]
-    const todo: any = newTodos.find(todo => todo.id === id)
+  const toggleTask = (id: string) => {
+    const newTasks = [...todos]
+    const todo: any = newTasks.find(todo => todo.id === id)
     todo.complete = !todo.complete
-    setTodos(newTodos)
+    setTasks(newTasks)
   }
 
-  const clearTodo = (id: string) => {
-    const newTodos = todos.filter(todo => todo.id !== id)
-    setTodos(newTodos)
+  const clearTask = (id: string) => {
+    const newTasks = todos.filter(todo => todo.id !== id)
+    setTasks(newTasks)
   }
 
-  const editTodo = (id: string) => {
-    const newTodos = [...todos]
-    const todo: any = newTodos.find(todo => todo.id === id)
-    todo.name = todoNameRef?.current?.value
-    setTodos(newTodos)
+  const editTask = (id: string, name: string) => {
+    const newTasks = [...todos]
+    const todo: any = newTasks.find(todo => todo.id === id)
+    todo.name = name
+    setTasks(newTasks)
   }
 
   const handleAddTask = (event: MouseEvent) => {
     if (todoNameRef.current !== null) {
       const name = todoNameRef.current.value
       if (name === '') return
-      setTodos(prevTodos => {
-        return [...prevTodos, { id: uuid(), name: name, complete: false }]
+      setTasks(prevTasks => {
+        return [...prevTasks, { id: uuid(), name: name, complete: false }]
       })
       todoNameRef.current.value = ''
     }
   }
 
-  const handleClearTodos = () => {
-    const newTodos = todos.filter(todo => !todo.complete)
-    setTodos(newTodos)
+  const handleClearTasks = () => {
+    const newTasks = todos.filter(todo => !todo.complete)
+    setTasks(newTasks)
   }
 
   const handleKeyPress = (event: any) => {
@@ -69,12 +69,12 @@ const App: FC = () => {
                 <input ref={todoNameRef} autoFocus type="text" className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" placeholder="Add Task..." onKeyPress={handleKeyPress} />
                 <div className="flex">
                   <button className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleAddTask}>Add Task</button>
-                  <button className="px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleClearTodos}>Clear Completed</button>
+                  <button className="px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleClearTasks}>Clear Completed</button>
                 </div>
               </div>
               <div className="m-1 rounded-lg font-medium text-text-secondary">{todos.filter(todo => !todo.complete).length} left to do</div>
             </div>
-            <TodoList todos={todos} toggleTodo={toggleTodo} clearTodo={clearTodo} editTodo={editTodo} />
+            <TodoList todos={todos} toggleTask={toggleTask} clearTask={clearTask} editTask={editTask} />
           </div>
         </div>
       </div>
