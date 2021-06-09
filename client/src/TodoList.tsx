@@ -1,9 +1,9 @@
 import Task from './Task'
 
-export default function TodoList({ todos, toggleTask, clearTask, editTask }: any) {
+export default function TodoList({ tasks, toggleTask, clearTask, editTask }: any) {
   return (
-    todos.map((todo: any) => {
-      return <Task key={todo.id} toggleTask={toggleTask} clearTask={clearTask} editTask={editTask} todo={todo} />
+    tasks.map((task: any) => {
+      return <Task key={task.id} toggleTask={toggleTask} clearTask={clearTask} editTask={editTask} task={task} />
     })
   )
 }
