@@ -1,22 +1,21 @@
-const { colors: defaultColors } = require('tailwindcss/defaultTheme')
-
-const colors = {
-  ...defaultColors,
-  ...{
-    gunmetal: '#202c39',
-    charcoal: '#283845',
-    sage: '#b8b08d',
-    deepchampagne: '#f2d492',
-    atomictangerine: '#f29559',
-    internationalorangegoldengatebridge: '#c44536'
-  },
-}
-
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
-  "theme": {
-    "colors": colors,
+  theme: {
+    colors: {
+      foreground: '#2C363F',
+      background: '#47A8BD',
+      text: {
+        DEFAULT: '#D6DBD2',
+        primary: '#2C363F',
+        secondary: '#D6DBD2',
+      },
+      input: {
+        dark: '#3E885B',
+        light: '#999',
+        active: '#888',
+      },
+    },
   },
   variants: {
     extend: {

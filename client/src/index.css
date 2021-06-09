@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 input:checked + div {
-  @apply bg-yellow-400;
+  @apply bg-input-light;
 }
 input:checked + div svg {
   @apply block;
