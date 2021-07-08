@@ -1,6 +1,7 @@
 export interface ITask {
   id: string
   name: string
+  cleared: boolean
   complete: boolean
 }
 

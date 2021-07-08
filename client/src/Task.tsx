@@ -1,7 +1,7 @@
 import { useState, useRef, ChangeEvent } from 'react'
 import { IEdit } from './Interfaces'
 
-export default function Task({ task, toggleTask, clearTask, editTask }: any) {
+export default function Task({ task, toggleTask, clearTask, editTask, removeTask }: any) {
   const [edit, setEdit] = useState<IEdit>({
     id: null,
     value: ''
@@ -10,12 +10,31 @@ export default function Task({ task, toggleTask, clearTask, editTask }: any) {
 
   taskNameRef?.current?.focus()
 
+  const handleClearedTask = () => {
+    const classes = "ml-2 font-medium text-justify text-text"
+    if (task.cleared) {
+      return classes + " text-text-cleared"
+    }
+    return classes
+  }
+
+  const isCleared = () => {
+    if (task.cleared) {
+      return "Unclear task"
+    }
+    return "Clear task"
+  }
+
   const handleTaskClick = () => {
     toggleTask(task.id)
   }
 
   const handleClearTask = () => {
     clearTask(task.id)
+  }
+
+  const handleRemoveTask = () => {
+    removeTask(task.id)
   }
 
   const handleEditTask = () => {
@@ -86,11 +105,12 @@ export default function Task({ task, toggleTask, clearTask, editTask }: any) {
             </g>
           </svg>
         </div>
-        <span className="ml-2 font-medium text-justify text-text">{task.name}</span>
+        <span className={handleClearedTask()}>{task.name}</span>
       </label>
       <div className="flex items-stretch justify-between">
         <button className="flex-auto rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={handleEditTask}>Edit task</button>
-        <button className="flex-auto rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={handleClearTask}>Remove task</button>
+        <button className="flex-auto rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={handleClearTask}>{isCleared()}</button>
+        <button className="flex-auto rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={handleRemoveTask}>Remove task</button>
       </div>
     </div>
   )

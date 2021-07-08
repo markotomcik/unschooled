@@ -28,6 +28,13 @@ const App: FC = () => {
   }
 
   const clearTask = (id: string) => {
+    const newTasks = [...tasks]
+    const task: any = newTasks.find(task => task.id === id)
+    task.cleared = !task.cleared
+    setTasks(newTasks)
+  }
+
+  const removeTask = (id: string) => {
     const newTasks = tasks.filter(task => task.id !== id)
     setTasks(newTasks)
   }
@@ -44,13 +51,23 @@ const App: FC = () => {
       const name = taskNameRef.current.value
       if (name === '') return
       setTasks(prevTasks => {
-        return [...prevTasks, { id: uuid(), name: name, complete: false }]
+        return [...prevTasks, { id: uuid(), name: name, cleared: false, complete: false }]
       })
       taskNameRef.current.value = ''
     }
   }
 
   const handleClearTasks = () => {
+    const newTasks = tasks.map((task: any) => {
+      if (task.complete) {
+        task.cleared = true
+      }
+      return task
+    })
+    setTasks(newTasks)
+  }
+
+  const handleRemoveTasks = () => {
     const newTasks = tasks.filter(task => !task.complete)
     setTasks(newTasks)
   }
@@ -62,25 +79,24 @@ const App: FC = () => {
   }
 
   return (
-    <>
-      <div className="min-h-screen w-100">
-        <div className="min-h-screen bg-background py-10 md:py-16 px-6">
-          <div className="flex flex-col max-w-xl m-auto justify-center p-4 shadow-xl rounded-xl bg-foreground">
-            <div className="mb-2">
-              <div className="flex flex-col md:flex-row">
-                <input ref={taskNameRef} autoFocus type="text" className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" placeholder="Add Task..." onKeyDown={handleKeyDown} />
-                <div className="flex">
-                  <button className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleAddTask}>Add Task</button>
-                  <button className="px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleClearTasks}>Clear Completed</button>
-                </div>
+    <div className="min-h-screen w-100">
+      <div className="min-h-screen bg-background py-10 md:py-16 px-6">
+        <div className="flex flex-col max-w-xl m-auto justify-center p-4 shadow-xl rounded-xl bg-foreground">
+          <div className="mb-2">
+            <div className="flex flex-col md:flex-row">
+              <input ref={taskNameRef} autoFocus type="text" className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" placeholder="Add Task..." onKeyDown={handleKeyDown} />
+              <div className="flex">
+                <button className="flex-auto px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleAddTask}>Add Task</button>
+                {/* <button className="px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleClearTasks}>Clear Completed</button> */}
+                <button className="px-3 py-1 m-1 rounded-lg bg-input-dark font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-inpubg-input-dark focus:ring-opacity-50 active:bg-input-active" onClick={handleRemoveTasks}>Remove Completed</button>
               </div>
-              <div className="m-1 rounded-lg font-medium text-text-secondary">{tasks.filter(task => !task.complete).length} left to do</div>
             </div>
-            <TodoList tasks={tasks} toggleTask={toggleTask} clearTask={clearTask} editTask={editTask} />
+            <div className="m-1 rounded-lg font-medium text-text-secondary">{tasks.filter(task => !task.complete).length} left to do</div>
           </div>
+          <TodoList tasks={tasks} toggleTask={toggleTask} clearTask={clearTask} editTask={editTask} removeTask={removeTask} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ module.exports = {
         DEFAULT: '#D6DBD2',
         primary: '#2C363F',
         secondary: '#D6DBD2',
+        cleared: '#EF4444'
       },
       input: {
         dark: '#3E885B',
