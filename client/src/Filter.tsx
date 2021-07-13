@@ -1,13 +1,15 @@
+import { Component } from 'react'
 import { EFilter } from './Interfaces'
 
-function Filter({ length, setFilter }: any) {
-  const handleChange = (e: any) => {
-    setFilter(e.target.value)
+export class Filter extends Component<any, any> {
+  handleChange = (e: any) => {
+    this.props.setFilter(e.target.value)
   }
 
-  return (
-    <div className="mb-2">
-      <div className="flex flex-row flex-1 flex-wrap" onChange={handleChange}>
+  render() {
+    return (
+      <div className="mb-2">
+      <div className="flex flex-row flex-1 flex-wrap" onChange={this.handleChange}>
         <label className="flex flex-auto items-center m-1">
           <input type="radio" className="opacity-0 absolute h-8 w-8" name="filter" value={EFilter.All} />
           <div className="bg-white border-2 rounded-full border-input-light w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-input-dark">
@@ -61,9 +63,10 @@ function Filter({ length, setFilter }: any) {
           <span className="ml-2 font-medium text-justify text-text">Show removed</span>
         </label>
       </div>
-      <div className="m-1 rounded-lg font-medium text-text-secondary">{length} left to do</div>
+      <div className="m-1 rounded-lg font-medium text-text-secondary">{this.props.length} left to do</div>
     </div>
-  )
+    )
+  }
 }
 
 export default Filter
