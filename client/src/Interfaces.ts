@@ -9,3 +9,10 @@ export interface IEdit {
   id: string | null
   value: string
 }
+
+export enum EFilter {
+  All,
+  Todo,
+  Done,
+  Removed
+}
