@@ -1,5 +1,7 @@
 import React, { Component, ChangeEvent } from 'react'
-import { IEdit } from './Interfaces'
+import { IEdit } from '../Interfaces'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 export class Task extends Component<any, any> {
   taskNameRef: React.RefObject<HTMLInputElement>
@@ -31,21 +33,21 @@ export class Task extends Component<any, any> {
     return classes
   }
 
-  handleTaskClick = () => {
-    this.props.toggleTask(this.props.task.id)
-  }
-
-  handleClearTask = () => {
-    this.props.clearTask(this.props.task.id)
-  }
-
-  handleRemoveTask = () => {
-    this.props.removeTask(this.props.task.id)
-  }
-
   handleEditTask = () => {
     console.log(this.taskNameRef.current)
     this.setEdit({ id: this.props.task.id, value: this.props.task.name })
+  }
+
+  handleTaskClick = () => {
+    this.props.completeTask(this.props.task)
+  }
+
+  handleClearTask = () => {
+    this.props.deleteTask(this.props.task)
+  }
+
+  handleRemoveTask = () => {
+    this.props.removeTask(this.props.task)
   }
 
   handleTaskChange = (value: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +64,11 @@ export class Task extends Component<any, any> {
         });
         return
       }
-      this.props.editTask(this.state.edit.id, name)
+      this.props.editTask({
+        ...this.props.task, 
+        id: this.state.edit.id,
+        name: name
+      })
       this.taskNameRef.current.value = ''
       this.setEdit({
         id: null,
@@ -117,7 +123,7 @@ export class Task extends Component<any, any> {
     }
 
     return (
-      <div className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
+      <div key={this.props.task.id} className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
         <label className="flex-1 flex items-center m-1">
           <input type="checkbox" className="opacity-0 absolute h-8 w-8" checked={this.props.task.complete} onChange={this.handleTaskClick} />
           <div className="bg-white border-2 rounded-md border-input-light w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-input-dark">
@@ -139,4 +145,14 @@ export class Task extends Component<any, any> {
   }
 }
 
-export default Task
+const mapDispatchToProps = (dispatch: any) => ({
+  editTask: (task: any) => dispatch(actions.editTask(task)),
+  completeTask: (task: any) => dispatch(actions.completeTask(task)),
+  deleteTask: (task: any) => dispatch(actions.deleteTask(task)),
+  removeTask: (task: any) => dispatch(actions.removeTask(task))
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Task);

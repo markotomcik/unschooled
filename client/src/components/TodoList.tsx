@@ -1,16 +1,17 @@
 import { Component } from 'react'
 import Task from './Task'
-import { EFilter, ITask } from './Interfaces'
+import { EFilter, ITask } from '../Interfaces'
+import { connect } from 'react-redux'
 
 export class TodoList extends Component<any, any> {
   render() {
     switch (+this.props.filter) {
       case EFilter.All:
         const notCleared = this.props.tasks.filter((task: ITask) => !task.cleared).map((task: any) => {
-          return <Task key={task.id} toggleTask={this.props.toggleTask} clearTask={this.props.clearTask} editTask={this.props.editTask} removeTask={this.props.removeTask} task={task} />
+          return <Task task={task} />
         })
         const cleared = this.props.tasks.filter((task: ITask) => task.cleared).map((task: any) => {
-          return <Task key={task.id} toggleTask={this.props.toggleTask} clearTask={this.props.clearTask} editTask={this.props.editTask} removeTask={this.props.removeTask} task={task} />
+          return <Task task={task} />
         })
 
         const isCleared = () => {
@@ -33,7 +34,7 @@ export class TodoList extends Component<any, any> {
         return (
           <>
             {this.props.tasks.filter((task: ITask) => !task.complete && !task.cleared).map((task: any) => {
-              return <Task key={task.id} toggleTask={this.props.toggleTask} clearTask={this.props.clearTask} editTask={this.props.editTask} removeTask={this.props.emoveTask} task={task} />
+              return <Task task={task} />
             })}
           </>
         )
@@ -42,7 +43,7 @@ export class TodoList extends Component<any, any> {
         return (
           <>
             {this.props.tasks.filter((task: ITask) => task.complete && !task.cleared).map((task: any) => {
-              return <Task key={task.id} toggleTask={this.props.toggleTask} clearTask={this.props.clearTask} editTask={this.props.editTask} removeTask={this.props.removeTask} task={task} />
+              return <Task task={task} />
             })}
           </>
         )
@@ -51,7 +52,7 @@ export class TodoList extends Component<any, any> {
         return (
           <>
             {this.props.tasks.filter((task: ITask) => task.cleared).map((task: any) => {
-              return <Task key={task.id} toggleTask={this.props.toggleTask} clearTask={this.props.clearTask} editTask={this.props.editTask} removeTask={this.props.removeTask} task={task} />
+              return <Task task={task} />
             })}
           </>
         )
@@ -62,4 +63,10 @@ export class TodoList extends Component<any, any> {
   }
 }
 
-export default TodoList
+const mapStateToProps = (state: any) => ({
+  tasks: state.tasks
+})
+
+export default connect(
+  mapStateToProps
+)(TodoList);
