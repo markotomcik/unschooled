@@ -13,8 +13,8 @@ export class Task extends Component<any, any> {
 
     this.state = {
       edit: {
-        id: null,
-        value: ''
+        Id: null,
+        Value: ''
       }
     }
 
@@ -27,7 +27,7 @@ export class Task extends Component<any, any> {
 
   handleClearedTask = () => {
     const classes = "ml-2 font-medium text-justify text-text"
-    if (this.props.task.cleared) {
+    if (this.props.task.Deleted) {
       return classes + " text-text-cleared"
     }
     return classes
@@ -35,7 +35,7 @@ export class Task extends Component<any, any> {
 
   handleEditTask = () => {
     console.log(this.taskNameRef.current)
-    this.setEdit({ id: this.props.task.id, value: this.props.task.name })
+    this.setEdit({ Id: this.props.task.Id, Value: this.props.task.Name })
   }
 
   handleTaskClick = () => {
@@ -51,7 +51,7 @@ export class Task extends Component<any, any> {
   }
 
   handleTaskChange = (value: ChangeEvent<HTMLInputElement>) => {
-    this.setEdit({ ...this.state.edit, value: value.target.value })
+    this.setEdit({ ...this.state.edit, Value: value.target.value })
   }
 
   handleSaveTask = () => {
@@ -59,20 +59,20 @@ export class Task extends Component<any, any> {
       const name = this.taskNameRef.current.value
       if (name === '') {
         this.setEdit({
-          id: null,
-          value: ''
+          Id: null,
+          Value: ''
         });
         return
       }
       this.props.editTask({
         ...this.props.task, 
-        id: this.state.edit.id,
-        name: name
+        Id: this.state.edit.Id,
+        Name: name
       })
       this.taskNameRef.current.value = ''
       this.setEdit({
-        id: null,
-        value: ''
+        Id: null,
+        Value: ''
       });
     }
   }
@@ -85,7 +85,7 @@ export class Task extends Component<any, any> {
 
   render() {
     const Buttons = () => {
-      if (this.props.task.cleared) {
+      if (this.props.task.Deleted) {
         return (
           <>
             <button className="flex-auto rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={this.handleClearTask}>Restore task</button>
@@ -101,11 +101,11 @@ export class Task extends Component<any, any> {
       )
     }
 
-    if (this.state.edit.id) {
+    if (this.state.edit.Id) {
       return (
         <div className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
           <label className="flex-1 flex items-center m-1">
-            <input type="checkbox" className="opacity-0 absolute h-8 w-8" checked={this.props.task.complete} onChange={this.handleTaskClick} />
+            <input type="checkbox" className="opacity-0 absolute h-8 w-8" checked={this.props.task.Completed} onChange={this.handleTaskClick} />
             <div className="bg-white border-2 rounded-md border-input-light w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-input-dark">
               <svg className="fill-current hidden w-3 h-3 text-input-active pointer-events-none" version="1.1" viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">
                 <g fill="none" fill-rule="evenodd">
@@ -115,7 +115,7 @@ export class Task extends Component<any, any> {
                 </g>
               </svg>
             </div>
-            <input ref={this.taskNameRef} autoFocus type="text" className="flex-auto px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" value={this.state.edit.value} onChange={this.handleTaskChange} onKeyDown={this.handleKeyDown} />
+            <input ref={this.taskNameRef} autoFocus type="text" className="flex-auto px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" value={this.state.edit.Value} onChange={this.handleTaskChange} onKeyDown={this.handleKeyDown} />
           </label>
           <button className="rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={this.handleSaveTask}>Save task</button>
         </div>
@@ -123,9 +123,9 @@ export class Task extends Component<any, any> {
     }
 
     return (
-      <div key={this.props.task.id} className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
+      <div key={this.props.task.Id} className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
         <label className="flex-1 flex items-center m-1">
-          <input type="checkbox" className="opacity-0 absolute h-8 w-8" checked={this.props.task.complete} onChange={this.handleTaskClick} />
+          <input type="checkbox" className="opacity-0 absolute h-8 w-8" checked={this.props.task.Completed} onChange={this.handleTaskClick} />
           <div className="bg-white border-2 rounded-md border-input-light w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-input-dark">
             <svg className="fill-current hidden w-3 h-3 text-input-active pointer-events-none" version="1.1" viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">
               <g fill="none" fill-rule="evenodd">
@@ -135,7 +135,7 @@ export class Task extends Component<any, any> {
               </g>
             </svg>
           </div>
-          <span className={this.handleClearedTask()}>{this.props.task.name}</span>
+          <span className={this.handleClearedTask()}>{this.props.task.Name}</span>
         </label>
         <div className="flex items-stretch justify-between">
           <Buttons />

@@ -15,7 +15,13 @@ export class TodoForm extends Component<any, any> {
     if (this.taskNameRef.current !== null) {
       const name = this.taskNameRef.current.value
       if (name === '') return
-      this.props.addTask({ name: name, cleared: false, complete: false })
+      this.props.addTask({
+        Name: name,
+        Desc: null,
+        Note: null,
+        Completed: false,
+        Deleted: false
+      })
       this.taskNameRef.current.value = ''
     }
   }

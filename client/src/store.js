@@ -1,27 +1,31 @@
 import { createStore } from "redux";
 import rootReducers from "./reducers";
 
-function saveToLocalStorage(state) {
-  try {
-    const serialisedState = JSON.stringify(state);
-    localStorage.setItem("todoApp.tasks", serialisedState);
-  } catch (e) {
-    console.warn(e);
-  }
-}
-
-function loadFromLocalStorage() {
-  try {
+const loadFromBE = async () => {
+  /* try {
     const serialisedState = localStorage.getItem("todoApp.tasks");
     if (serialisedState === null) return undefined;
+    console.log(JSON.parse(serialisedState))
     return JSON.parse(serialisedState);
   } catch (e) {
     console.warn(e);
     return undefined;
+  }  */
+
+  try {
+    const response = await fetch('http://localhost/TodoServer/api/ToDos?UserId=4', {
+      method: "GET"
+    })
+    const data = await response.json()
+    console.log(data)
+    return await data.Data
+  } catch (e) {
+    console.warn(e)
   }
 }
 
-const store = createStore(rootReducers, loadFromLocalStorage());
-store.subscribe(() => saveToLocalStorage(store.getState()));
+const store = createStore(rootReducers, loadFromBE())
+
+console.log(store.getState())
 
 export default store;

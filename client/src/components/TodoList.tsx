@@ -7,15 +7,15 @@ export class TodoList extends Component<any, any> {
   render() {
     switch (+this.props.filter) {
       case EFilter.All:
-        const notCleared = this.props.tasks.filter((task: ITask) => !task.cleared).map((task: any) => {
+        const notCleared = this.props.tasks.filter((task: ITask) => !task.Deleted).map((task: any) => {
           return <Task task={task} />
         })
-        const cleared = this.props.tasks.filter((task: ITask) => task.cleared).map((task: any) => {
+        const cleared = this.props.tasks.filter((task: ITask) => task.Deleted).map((task: any) => {
           return <Task task={task} />
         })
 
         const isCleared = () => {
-          if (this.props.tasks.filter((task: ITask) => task.cleared).length > 0 && this.props.tasks.filter((task: ITask) => !task.cleared).length) {
+          if (this.props.tasks.filter((task: ITask) => task.Deleted).length > 0 && this.props.tasks.filter((task: ITask) => !task.Deleted).length) {
             return (
               <hr className="border-b-2 text-input-light mb-3" />
             )
@@ -33,7 +33,7 @@ export class TodoList extends Component<any, any> {
       case EFilter.Todo:
         return (
           <>
-            {this.props.tasks.filter((task: ITask) => !task.complete && !task.cleared).map((task: any) => {
+            {this.props.tasks.filter((task: ITask) => !task.Completed && !task.Deleted).map((task: any) => {
               return <Task task={task} />
             })}
           </>
@@ -42,7 +42,7 @@ export class TodoList extends Component<any, any> {
       case EFilter.Done:
         return (
           <>
-            {this.props.tasks.filter((task: ITask) => task.complete && !task.cleared).map((task: any) => {
+            {this.props.tasks.filter((task: ITask) => task.Completed && !task.Deleted).map((task: any) => {
               return <Task task={task} />
             })}
           </>
@@ -51,7 +51,7 @@ export class TodoList extends Component<any, any> {
       case EFilter.Removed:
         return (
           <>
-            {this.props.tasks.filter((task: ITask) => task.cleared).map((task: any) => {
+            {this.props.tasks.filter((task: ITask) => task.Deleted).map((task: any) => {
               return <Task task={task} />
             })}
           </>

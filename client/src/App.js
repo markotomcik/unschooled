@@ -14,9 +14,14 @@ export class App extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.initTasks()
+  }
+
   setFilter = (prop) => {
     this.setState({ filter: prop })
     console.log(this.state)
+    console.log(this.props)
   }
 
   render() {
@@ -39,7 +44,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  initTasks: (tasks) => dispatch(actions.initTasks(tasks))
+  initTasks: (userId = 4) => dispatch(actions.initTasks(userId))
 })
 
 export default connect(

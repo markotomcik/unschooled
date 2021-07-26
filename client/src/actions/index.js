@@ -1,46 +1,59 @@
+import { getTasksReq, completeTaskReq } from "../BEConnection"
+
 export const addTask = task => ({
   type: 'ADD_TASK',
   payload: {
-    name: task.name,
-    cleared: task.cleared,
-    complete: task.complete
+    Name: task.Name,
+    Desc: task.Desc,
+    Note: task.Note,
+    Completed: task.Completed,
+    Deleted: task.Deleted
   }
 })
 
 export const editTask = task => ({
   type: 'EDIT_TASK',
-  payload: {
-    id: task.id,
-    name: task.name,
-  }
+  payload: task
 })
 
 export const completeTask = task => ({
   type: 'COMPLETE_TASK',
-  payload: {
-    id: task.id,
-    complete: task.complete
-  }
+  payload: task
 })
 
 export const deleteTask = task => ({
   type: 'DELETE_TASK',
-  payload: {
-    id: task.id,
-    cleared: task.cleared
-  }
+  payload: task
 })
 
 export const removeTask = task => ({
   type: 'REMOVE_TASK',
   payload: {
-    name: task.name,
-    cleared: task.cleared,
-    complete: task.complete
+    Id: task.Id
   }
 })
 
-export const initTasks = tasks => ({
-  type: 'INIT_TASKS',
-  payload: tasks
+const getTasksRequest = () => ({
+  type: 'GET_TASKS_REQUEST'
 })
+
+const getTasksSuccess = (tasks) => ({
+  type: 'GET_TASKS_SUCCESS',
+  payload: tasks || []
+})
+
+const getTasksFailure = () => ({
+  type: 'GET_TASKS_FAILURE'
+})
+
+export const initTasks = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getTasksRequest())
+      let tasks = await getTasksReq()
+      dispatch(getTasksSuccess(tasks.Data))
+    } catch (e) {
+      dispatch(getTasksFailure())
+    }
+  }
+}

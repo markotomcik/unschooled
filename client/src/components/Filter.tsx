@@ -7,6 +7,10 @@ export class Filter extends Component<any, any> {
     this.props.setFilter(e.target.value)
   }
 
+  componentDidUpdate() {
+    console.log(this.props.tasks)
+  }
+
   render() {
     return (
       <div className="mb-2">
@@ -64,7 +68,7 @@ export class Filter extends Component<any, any> {
             <span className="ml-2 font-medium text-justify text-text">Show removed</span>
           </label>
         </div>
-        <div className="m-1 rounded-lg font-medium text-text-secondary">{this.props.tasks.filter((task: any) => !task.complete && !task.cleared).length} left to do</div>
+        <div className="m-1 rounded-lg font-medium text-text-secondary">{this.props.tasks.filter((task: any) => !task.Completed && !task.Deleted).length} left to do</div>
       </div>
     )
   }

@@ -1,13 +1,16 @@
 export interface ITask {
-  id: string
-  name: string
-  cleared: boolean
-  complete: boolean
+  Id: number
+  Name: string
+  Desc: string
+  Note: string
+  Completed: boolean
+  Deleted: boolean
+  User: number
 }
 
 export interface IEdit {
-  id: string | null
-  value: string
+  Id: string | null
+  Value: string
 }
 
 export enum EFilter {
