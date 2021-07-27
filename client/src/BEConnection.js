@@ -1,11 +1,11 @@
 export const getTasksReq = async (userId) => {
   try {
-    const response = await fetch('http://localhost/TodoServer/api/ToDos?UserId=4', {
+    const response = await fetch(`http://localhost/TodoServer/api/ToDos?UserId=${userId}`, {
       method: "GET"
     })
     return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
 
@@ -20,7 +20,7 @@ export const editTaskReq = async (task) => {
     })
     return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
 
@@ -35,21 +35,22 @@ export const completeTaskReq = async (task) => {
     })
     return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
 
-export const createTaskPost = (task) => {
+export const addTaskReq = async (task) => {
   try {
-    fetch(`http://localhost/TodoServer/api/ToDos`, {
+    const response = await fetch(`http://localhost/TodoServer/api/ToDos`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(task)
     })
+    return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
 
@@ -64,7 +65,7 @@ export const deleteTaskReq = async (task) => {
     })
     return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
 
@@ -75,6 +76,6 @@ export const removeTaskReq = async (id) => {
     })
     return await response.json()
   } catch (e) {
-    console.warn(e)
+    throw e
   }
 }
